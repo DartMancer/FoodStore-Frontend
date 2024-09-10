@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:food_store/core/core.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 class ASText extends StatelessWidget {
   const ASText({
@@ -40,6 +42,26 @@ class ASText extends StatelessWidget {
             decoration: TextDecoration.none,
           ),
     );
+  }
+}
+
+class Logger {
+  var talker = GetIt.I<Talker>();
+
+  void info(dynamic message) {
+    talker.info(message);
+  }
+
+  void handle(dynamic e, dynamic st) {
+    talker.handle(e, st);
+  }
+
+  void debug(dynamic message) {
+    talker.debug(message);
+  }
+
+  void critical(dynamic message) {
+    talker.critical(message);
   }
 }
 

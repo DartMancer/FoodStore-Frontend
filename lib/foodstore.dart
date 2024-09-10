@@ -43,7 +43,7 @@ class _FoodStoreState extends State<FoodStore> {
               darkTheme: MyThemes.darkTheme,
               routerConfig: GetIt.I<AppRouter>().config(
                 deepLinkBuilder: (deepLink) async {
-                  return DeepLink.single(const MainFoodStoreRoute());
+                  return DeepLink.single(const StoresRoute());
                 },
                 navigatorObservers: () => [
                   TalkerRouteObserver(GetIt.I<Talker>()),

@@ -31,6 +31,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MainFoodStoreScreen(),
       );
     },
+    StoreRoute.name: (routeData) {
+      final args = routeData.argsAs<StoreRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: StoreScreen(
+          key: args.key,
+          id: args.id,
+        ),
+      );
+    },
+    StoresRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StoresScreen(),
+      );
+    },
   };
 }
 
@@ -82,6 +98,57 @@ class MainFoodStoreRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MainFoodStoreRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StoreScreen]
+class StoreRoute extends PageRouteInfo<StoreRouteArgs> {
+  StoreRoute({
+    Key? key,
+    required int id,
+    List<PageRouteInfo>? children,
+  }) : super(
+          StoreRoute.name,
+          args: StoreRouteArgs(
+            key: key,
+            id: id,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'StoreRoute';
+
+  static const PageInfo<StoreRouteArgs> page = PageInfo<StoreRouteArgs>(name);
+}
+
+class StoreRouteArgs {
+  const StoreRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'StoreRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [StoresScreen]
+class StoresRoute extends PageRouteInfo<void> {
+  const StoresRoute({List<PageRouteInfo>? children})
+      : super(
+          StoresRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StoresRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

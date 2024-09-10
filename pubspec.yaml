@@ -32,6 +32,7 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   flutter_typeahead: ^4.6.2
   flutter_web_socket: ^1.0.5
+  fl_chart: ^0.67.0
   get_it: ^7.6.4
   image_cropper: ^5.0.0
   image_picker: ^1.0.4
@@ -52,6 +53,7 @@ dependencies:
   talker_flutter: ^3.5.4
   tap_debouncer: ^2.2.0
   timeago: ^3.6.1
+  time_range: ^1.1.0
   transparent_image: ^2.0.1
   url_launcher: ^6.2.1
   web_socket_channel: ^2.4.0

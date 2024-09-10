@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:food_store/core/constants/constants.dart';
 import 'package:food_store/core/core.dart';
+import 'package:food_store/data/data.dart';
+import 'package:food_store/pages/main/main_screen/main_screen.dart';
 
 @RoutePage()
 class MainFoodStoreScreen extends StatefulWidget {
@@ -12,6 +13,25 @@ class MainFoodStoreScreen extends StatefulWidget {
 }
 
 class _MainFoodStoreScreenState extends State<MainFoodStoreScreen> {
+  final _mainBloc = MainScreenBloc(
+    SellingsGraphApi(),
+    RankingProductsApi(),
+    StocksApi(),
+    SuppliersRankApi(),
+  );
+
+  @override
+  void initState() {
+    _mainBloc.add(LoadMainScreenData());
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _mainBloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -20,143 +40,7 @@ class _MainFoodStoreScreenState extends State<MainFoodStoreScreen> {
       backgroundColor: backgroundClr,
       appBar: AppBar(
         backgroundColor: backgroundClr,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return elementsClr;
-                        }
-                        if (states.contains(MaterialState.hovered)) {
-                          return elementsClr.withOpacity(0.5);
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: whiteClr,
-                        fontFamily: fontApp,
-                      ),
-                      children: const [
-                        TextSpan(
-                          text: 'Food',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                        TextSpan(
-                          text: 'Store',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return elementsClr;
-                          }
-                          if (states.contains(MaterialState.hovered)) {
-                            return elementsClr.withOpacity(0.5);
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    child: Text(
-                      'Магазины',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: textClr,
-                        fontFamily: fontApp,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return elementsClr;
-                          }
-                          if (states.contains(MaterialState.hovered)) {
-                            return elementsClr.withOpacity(0.5);
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    child: Text(
-                      'Товары',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: textClr,
-                        fontFamily: fontApp,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return elementsClr;
-                          }
-                          if (states.contains(MaterialState.hovered)) {
-                            return elementsClr.withOpacity(0.5);
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    child: Text(
-                      'Аналитика',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: textClr,
-                        fontFamily: fontApp,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  highlightColor: elementsClr,
-                  icon: Icon(
-                    Icons.account_circle_rounded,
-                    color: textClr,
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
+        title: const MainScreenAppBar(),
       ),
       body: SizedBox(
         width: width,
@@ -167,34 +51,21 @@ class _MainFoodStoreScreenState extends State<MainFoodStoreScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: width * 0.7,
-                    height: width * 0.4,
-                    decoration: BoxDecoration(
-                      color: elementsClr,
-                      borderRadius: BorderRadius.circular(width * 0.01),
-                    ),
-                  ),
-                  Container(
-                    width: width * 0.25,
-                    height: width * 0.4,
-                    decoration: BoxDecoration(
-                      color: elementsClr,
-                      borderRadius: BorderRadius.circular(width * 0.01),
-                    ),
-                  ),
+                  GraphBlock(bloc: _mainBloc),
+                  RaitingBlock(bloc: _mainBloc),
                 ],
               ),
-              SizedBox(height: width * 0.02),
-              Container(
-                width: width * 0.970,
-                height: width * 0.2,
-                decoration: BoxDecoration(
-                  color: elementsClr,
-                  borderRadius: BorderRadius.circular(width * 0.01),
-                ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: width * 0.015),
+                child: SuppliersBlock(bloc: _mainBloc),
               ),
-              SizedBox(height: width * 0.02),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(width: width * 0.015),
+                  StockBlock(bloc: _mainBloc),
+                ],
+              )
             ],
           ),
         ),
